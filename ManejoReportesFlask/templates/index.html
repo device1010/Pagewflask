@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gráficos Estadísticos</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Gráficos Estadísticos</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <br>
+        <input type="submit" value="Mostrar Columnas">
+    </form>
+
+    {% if columns %}
+        <h2>Seleccionar columnas</h2>
+        <form method="post" action="/generate_plot">
+            {% for column in columns %}
+                <input type="checkbox" name="columns" value="{{ column }}"> {{ column }}<br>
+            {% endfor %}
+            <br>
+            <input type="submit" value="Generar Gráfico">
+        </form>
+    {% endif %}
+
+    {% if plot %}
+        <h2>Gráfico Estadístico</h2>
+        <img src="data:image/png;base64,{{ plot }}" alt="Gráfico Estadístico">
+    {% endif %}
+</body>
+</html>
